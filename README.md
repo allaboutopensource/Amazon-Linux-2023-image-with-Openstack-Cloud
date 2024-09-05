@@ -51,10 +51,12 @@ openstack image create --container-format bare --disk-format qcow2 --volume amaz
 9) Create a vm instance using this image “”amazon-linux-2023-image-updated” and do a ssh and type the below command to check the output 
 
 [root@amazon-linux-2023-updated home]# cloud-id
+
 openstack
 
 
 [root@amazon-linux-2023-updated home]# cat /etc/system-release
+
 Amazon Linux release 2023.5.20240819 (Amazon Linux)
 
 
@@ -96,10 +98,12 @@ mkisofs -output seed.iso -volid cidata -joliet -rock user-data meta-data
 9) SSH to the instance using the cloud config data from the user-data . Datasource will show” nocloud” and seed=/dev/vdb 
 
 [itops@al2023-ec2 ~]$ cloud-id
+
 nocloud
 
 
 [itops@al2023-ec2 ~]$ cloud-init status --long
+
 status: done
 time: Thu, 05 Sep 2024 08:23:56 +0000
 detail:
@@ -122,6 +126,7 @@ cloud-init init
 13) ssh to the instance and check the cloud datasource and it will show openstack and :
 
 [itops@al2023-bare ~]$ cloud-id
+
 openstack
 
 14) Now remove /var/lib/cloud/seed/nocloud directory to remove the user-data and meta-data from the instance so that next time it can pick cloud-config data from the cloud.cfg .
