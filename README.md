@@ -72,7 +72,7 @@ openstack image create --tag al2023 --disk-format qcow2 --container-format bare 
 #vim:syntax=yaml
 users:
   - default
-  - name: ellucian
+  - name: devops
     groups: sudo
     sudo: ALL=(ALL) NOPASSWD:ALL
     plain_text_passwd: <try it>
@@ -90,10 +90,10 @@ mkisofs -output seed.iso -volid cidata -joliet -rock user-data meta-data
 
 9) SSH to the instance using the cloud config data from the user-data . Datasource will show” nocloud” and seed=/dev/vdb 
 
-[ellucian@al2023-ec2 ~]$ cloud-id
+[itops@al2023-ec2 ~]$ cloud-id
 nocloud
 
-[ellucian@al2023-ec2 ~]$ cloud-init status --long
+[itops@al2023-ec2 ~]$ cloud-init status --long
 status: done
 time: Thu, 05 Sep 2024 08:23:56 +0000
 detail:
@@ -114,7 +114,7 @@ cloud-init init
 
 13) ssh to the instance and check the cloud datasource and it will show openstack and :
 
-[ellucian@al2023-bare ~]$ cloud-id
+[itops@al2023-bare ~]$ cloud-id
 openstack
 
 14) Now remove /var/lib/cloud/seed/nocloud directory to remove the user-data and meta-data from the instance so that next time it can pick cloud-config data from the cloud.cfg .
