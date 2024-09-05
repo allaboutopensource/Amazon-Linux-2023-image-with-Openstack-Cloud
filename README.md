@@ -3,7 +3,7 @@ This repo is to use Amazon Linux 2023 images for use with Openstack Cloud
 
 There are basically 2 ways that I have tried to use the Amazon Linux 2023 image on Openstack cloud :
 
-==================================Using the volume out of the image and then mount the volume======================================================
+==================================Using the volume======================================================
 
 1) First we need to download the Amazon Linux 2023 image for use with Kvm using the below link in the format qcow2
 
