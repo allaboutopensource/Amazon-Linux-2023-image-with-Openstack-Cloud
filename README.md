@@ -22,8 +22,11 @@ openstack volume create --size 40 --image amazon-linux-2023-image amazon-linux-2
 5) Once attached the volume you will see it in the lsblk command then mount the volume and then chroot the mount point to access the file system. 
 
 mkdir /als
+
 mount /dev/vdf1 /als
+
 chroot /als
+
 note: in my case volume was /dev/vdf1 
 
 5) make changes to the /etc/cloud/cloud.cfg as per the standard image like adding the “devops/itops/cloud” user instead of the ec2-user and other config changes like installing packages etc as per your company image standards. 
