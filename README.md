@@ -36,6 +36,7 @@ note: in my case volume was /dev/vdf1
 datasource_list: [ OpenStack, NoCloud, AltCloud, ConfigDrive, OVF, VMware, None ]
 
 cloud-init clean
+
 cloud-init init 
 
 6) exit the file system and detach the volume from the existing vm instance 
@@ -51,6 +52,7 @@ openstack image create --container-format bare --disk-format qcow2 --volume amaz
 
 [root@amazon-linux-2023-updated home]# cloud-id
 openstack
+
 
 [root@amazon-linux-2023-updated home]# cat /etc/system-release
 Amazon Linux release 2023.5.20240819 (Amazon Linux)
@@ -96,6 +98,7 @@ mkisofs -output seed.iso -volid cidata -joliet -rock user-data meta-data
 [itops@al2023-ec2 ~]$ cloud-id
 nocloud
 
+
 [itops@al2023-ec2 ~]$ cloud-init status --long
 status: done
 time: Thu, 05 Sep 2024 08:23:56 +0000
@@ -111,6 +114,7 @@ edit the /etc/cloud/cloud.cfg.d/02_amazon-onprem.cfg and add openstack as dataso
 datasource_list: [ OpenStack, NoCloud, AltCloud, ConfigDrive, OVF, VMware, None ]
 
 cloud-init clean
+
 cloud-init init 
 
 12) Detach the seed.iso volume from the instance and reboot the vm instance and this time it will pick from the /var/lib/cloud/seed/nocloud/user-data
@@ -125,6 +129,7 @@ openstack
 Run the commands:
 
 cloud-init clean
+
 cloud-init init 
 
 
