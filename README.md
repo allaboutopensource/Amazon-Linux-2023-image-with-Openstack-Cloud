@@ -1,13 +1,13 @@
 # Amazon-Linux-2023-image-with-Openstack-Cloud
 This repo is to use Amazon Linux 2023 images for use with Openstack Cloud
 
-There are basically 2 ways that I have tried to use the Amazon Linux 2023 image on Openstack cloud :
+There are few ways that I have tried to use the Amazon Linux 2023 image on Openstack cloud :
 
 ==================================Using the volume======================================================
 
 1) First we need to download the Amazon Linux 2023 image for use with Kvm using the below link in the format qcow2
 
-https://cdn.amazonlinux.com/al2023/os-images/2023.5.20240903.0/
+https://cdn.amazonlinux.com/al2023/os-images/2023.5.20240903.0/kvm/al2023-kvm-2023.5.20240903.0-kernel-6.1-x86_64.xfs.gpt.qcow2
 
 2) Upload the qcow2 image to the image repository (glance) using the openstack dashboard or CLI
 
@@ -65,7 +65,7 @@ Amazon Linux release 2023.5.20240819 (Amazon Linux)
 
 1) First we need to download the Amazon Linux 2023 image for use with Kvm using the below link in the format qcow2
 
-https://cdn.amazonlinux.com/al2023/os-images/2023.5.20240903.0/
+https://cdn.amazonlinux.com/al2023/os-images/2023.5.20240903.0/kvm/al2023-kvm-2023.5.20240903.0-kernel-6.1-x86_64.xfs.gpt.qcow2
 
 2) Upload the qcow2 image to the image repository (glance) using the openstack dashboard or CLI
 
@@ -142,5 +142,44 @@ cloud-init init
 
 NOte: You can make this image as public, private or shared as per your needs. 
 
+============================================================================Qemu-nbd--------------------------------------------------
 
+1) First we need to download the Amazon Linux 2023 image for use with Kvm using the below link in the format qcow2
 
+wget https://cdn.amazonlinux.com/al2023/os-images/2023.5.20240903.0/kvm/al2023-kvm-2023.5.20240903.0-kernel-6.1-x86_64.xfs.gpt.qcow2
+
+2) Add the module nbd to the qemu
+
+modprobe nbd max_part=8
+
+3) Connect the qcow2 file we just downloaded to the nwtwork block device on the host 
+
+qemu-nbd --connect=/dev/nbd0 al2.qcow2
+
+4) Check the device partition on the disk :
+
+fdisk /dev/nbd0 -l
+
+5) mount the Linux filesystem partition to the directory
+
+mount /dev/nbd0p1 /als/
+
+6) chroot /als to access the file system
+
+7) You can now make changes to the /etc/cloud/cloud.cfg as per the standard image like adding the “devops/itops/cloud” user instead of the ec2-user and other config changes like installing packages etc as per your company image standards. 
+
+8) edit the /etc/cloud/cloud.cfg.d/02_amazon-onprem.cfg and add openstack as datasource 
+
+datasource_list: [ OpenStack, NoCloud, AltCloud, ConfigDrive, OVF, VMware, None ]
+
+cloud-init clean
+
+cloud-init init 
+
+9) exit the file system and detach the volume from the existing vm instance .
+
+qemu-nbd --disconnect /dev/nbd0
+
+10) unmount the directory
+
+umount /als/
