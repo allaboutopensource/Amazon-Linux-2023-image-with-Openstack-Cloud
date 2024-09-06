@@ -60,7 +60,12 @@ openstack
 Amazon Linux release 2023.5.20240819 (Amazon Linux)
 
 
-===========================================================================Using the seed.iso method =========================================================
+
+
+2) Using the seed.iso method
+   =================================================================
+
+   
 
 
 1) First we need to download the Amazon Linux 2023 image for use with Kvm using the below link in the format qcow2
@@ -142,7 +147,12 @@ cloud-init init
 
 NOte: You can make this image as public, private or shared as per your needs. 
 
-============================================================================Qemu-nbd--------------------------------------------------
+
+
+3) Using the Qemu-nbd method
+   ==========================================================================================
+
+   
 
 1) First we need to download the Amazon Linux 2023 image for use with Kvm using the below link in the format qcow2
 
